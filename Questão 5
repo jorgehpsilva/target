@@ -1,0 +1,12 @@
+function inverterString(str) {
+    let resultado = '';  // Variável para armazenar a string invertida
+    for (let i = str.length - 1; i >= 0; i--) {
+        resultado += str[i];  // Adiciona o caractere da posição i à string resultado
+    }
+    return resultado;  // Retorna a string invertida
+}
+
+let minhaString = "Novo colaborador da Target";  // A string a ser invertida
+let stringInvertida = inverterString(minhaString);  // Chama a função para inverter a string
+
+console.log(stringInvertida);  // Exibe a string invertida
