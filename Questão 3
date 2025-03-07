@@ -1,0 +1,33 @@
+const fs = require('fs');
+
+fs.readFile('dados.json', 'utf8', (err, data) => {
+    if (err) {
+        console.error("Erro ao ler o arquivo:", err);
+        return;
+    }
+
+    const faturamentoMensal = JSON.parse(data);
+
+    function calcularFaturamento(faturamento) {
+        const diasComFaturamento = faturamento.filter(d => d.valor > 0);
+
+        const menorValor = Math.min(...diasComFaturamento.map(d => d.valor));
+        const maiorValor = Math.max(...diasComFaturamento.map(d => d.valor));
+
+        const soma = diasComFaturamento.reduce((acc, d) => acc + d.valor, 0);
+        const media = soma / diasComFaturamento.length;
+
+        const diasAcimaDaMedia = diasComFaturamento.filter(d => d.valor > media).length;
+
+        return {
+            menorValor,
+            maiorValor,
+            diasAcimaDaMedia
+        };
+    }
+
+    const resultado = calcularFaturamento(faturamentoMensal);
+    console.log("Menor valor de faturamento:", resultado.menorValor.toFixed(2));
+    console.log("Maior valor de faturamento:", resultado.maiorValor.toFixed(2));
+    console.log("Número de dias acima da média:", resultado.diasAcimaDaMedia);
+});
